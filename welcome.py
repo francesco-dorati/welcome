@@ -33,7 +33,7 @@ usage_cpu = psutil.cpu_percent()
 usage_memory = psutil.virtual_memory()[2] 
 
 # swap usage
-usage_swap = psutil.swap_memory()
+usage_swap = psutil.swap_memory()[3]
 
 # uptime
 uptime = os.popen("uptime").read().replace(',', '')
@@ -49,7 +49,7 @@ users_connected = uptime[3]
 shell = os.environ['SHELL']
 
 # hostname
-hostname = ""
+hostname = socket.gethostname()
 
 # ip
 ip = socket.gethostbyname(socket.gethostname())
@@ -70,27 +70,50 @@ print(colored("Welcome", attrs=["bold"]), colored(username, username_color, attr
 print(colored("System information as of", attrs=["bold"]), colored(date, date_color, attrs=["bold"]), "\n")
 
 # 1 x 1
-print(colored(f"Usage of /:\t\t", attribute_color, attrs=["bold"]), end='') 
-print(colored(f"{usage_disk}% of {total_disk // (2**30)}GB", value_color, attrs=["bold"]), end="\t\t")
+# disk
+print(colored('Usage of /:\t\t', attribute_color, attrs=['bold']), end='') 
+print(colored(f'{free_disk // (2**30)} GB of {total_disk // (2**30)} GB', value_color, attrs=['bold']), end='\t\t')
 
 # 1 x 2
-print(colored(f"Uptime:\t\t\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{days} days " + f"{hours} hours " + f"{minutes} minutes", value_color, attrs=["bold"]), end='\n')
+# uptime
+print(colored('Uptime:\t\t\t', attribute_color, attrs=['bold']), end='')
+print(colored(f'{days} days ' + f'{hours} hours ' + f'{minutes} minutes', value_color, attrs=['bold']), end='\n')
 
 # 2 x 1
-#cpu
-print(colored(f"Memory usage:\t\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{usage_memory}%", value_color, attrs=["bold"]), end="\t\t\t")
+# cpu
+print(colored('CPU usage:\t\t', attribute_color, attrs=['bold']), end='')
+print(colored(f'{usage_cpu}%', value_color, attrs=['bold']), end='\t\t\t')
 
 # 2 x 2
-print(colored(f"Users logged in:\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{users_connected}", value_color, attrs=["bold"]), end='\n')
+# hostname
+print(colored('Hostname:\t\t', attribute_color, attrs=['bold']), end='')
+print(colored(hostname, value_color, attrs=['bold']), end='\n')
 
 # 3 x 1
-print(colored(f"Shell:\t\t\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{shell}", value_color, attrs=["bold"]), end="\t\t")
+# memory
+print(colored('Memory usage:\t\t', attribute_color, attrs=['bold']), end='')
+print(colored(f'{usage_memory}%', value_color, attrs=['bold']), end='\t\t\t')
 
 # 3 x 2
-print(colored(f"IPv4 address for en0:\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{ip}", value_color, attrs=["bold"]), end='\n')
+# ip
+print(colored('IPv4 address for en0:\t', attribute_color, attrs=['bold']), end='')
+print(colored(ip, value_color, attrs=['bold']), end='\n')
 
+# 4 X 1
+# swap
+print(colored('Swap usage:\t\t', attribute_color, attrs=['bold']), end='')
+print(colored(f'{usage_swap}%', value_color, attrs=['bold']), end='\t\t\t')
+
+
+# 4 x 2
+# users logged
+print(colored('Users logged in:\t', attribute_color, attrs=['bold']), end='')
+print(colored(users_connected, value_color, attrs=['bold']), end='\n')
+
+# 5 x 1
+# shell
+print(colored('Shell:\t\t\t', attribute_color, attrs=['bold']), end='')
+print(colored(shell, value_color, attrs=['bold']), end="\t\t")
+
+# 5 x 2
+print()
