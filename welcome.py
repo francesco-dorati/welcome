@@ -75,7 +75,7 @@ print(colored(f"{usage_disk}% of {total_disk // (2**30)}GB", value_color, attrs=
 
 # 1 x 2
 print(colored(f"Uptime:\t\t\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{days} days" + f"{hour} hours" + f"{minute} minute", value_color, attrs=["bold"]), end='\n')
+print(colored(f"{days} days " + f"{hours} hours " + f"{minutes} minutes", value_color, attrs=["bold"]), end='\n')
 
 # 2 x 1
 #cpu
