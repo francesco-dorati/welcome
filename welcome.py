@@ -9,9 +9,7 @@ from termcolor import colored
 
 """
     TODO
-    -   FIX uptime
-    -   Hostname
-    -   Swap usage
+    -   add percentage colors
     -   TODO list
     
 """
@@ -28,8 +26,14 @@ date = datetime.now().strftime('%A %d %B %Y - %H:%M:%S %Z')
 total_disk, _, free_disk = shutil.disk_usage("/")
 usage_disk = round((((total_disk - free_disk) / total_disk) * 100), 1)
 
+# cpu usage
+usage_cpu = psutil.cpu_percent()
+
 # memory usage
 usage_memory = psutil.virtual_memory()[2] 
+
+# swap usage
+usage_swap = psutil.swap_memory()
 
 # uptime
 uptime = os.popen("uptime").read().replace(',', '')
@@ -43,6 +47,9 @@ users_connected = uptime[3]
 
 # shell
 shell = os.environ['SHELL']
+
+# hostname
+hostname = ""
 
 # ip
 ip = socket.gethostbyname(socket.gethostname())
@@ -68,9 +75,10 @@ print(colored(f"{usage_disk}% of {total_disk // (2**30)}GB", value_color, attrs=
 
 # 1 x 2
 print(colored(f"Uptime:\t\t\t", attribute_color, attrs=["bold"]), end='')
-print(colored(f"{days} days" if days != 0 else "" + f"{hour} hours" + f"{minute} minute", value_color, attrs=["bold"]), end='\n')
+print(colored(f"{days} days" + f"{hour} hours" + f"{minute} minute", value_color, attrs=["bold"]), end='\n')
 
 # 2 x 1
+#cpu
 print(colored(f"Memory usage:\t\t", attribute_color, attrs=["bold"]), end='')
 print(colored(f"{usage_memory}%", value_color, attrs=["bold"]), end="\t\t\t")
 
