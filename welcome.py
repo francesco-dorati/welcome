@@ -72,6 +72,9 @@ attribute_color = "grey"
 value_color = None 
 todos_color = 'grey'
 
+# clear screen
+os.system('clear')
+
 # welcome
 print(colored("Welcome", attrs=["bold"]), colored(username, username_color, attrs=["bold"]), colored("to", attrs=["bold"]), colored(f"{os_name} {os_version}", os_color, attrs=["bold"]), "\n")
 
