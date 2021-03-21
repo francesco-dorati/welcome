@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import getpass
 import os
 import socket
@@ -6,6 +8,8 @@ import psutil
 
 from datetime import datetime
 from termcolor import colored
+
+import todo
 
 """
     TODO
@@ -54,6 +58,9 @@ hostname = socket.gethostname()
 # ip
 ip = socket.gethostbyname(socket.gethostname())
 
+# todos
+todos = todo.get()
+
 
 # OUTPUT
 
@@ -62,6 +69,7 @@ os_color = "green"
 date_color = "cyan"
 attribute_color = "grey"
 value_color = None 
+todos_color = 'grey'
 
 # welcome
 print(colored("Welcome", attrs=["bold"]), colored(username, username_color, attrs=["bold"]), colored("to", attrs=["bold"]), colored(f"{os_name} {os_version}", os_color, attrs=["bold"]), "\n")
@@ -117,3 +125,10 @@ print(colored(shell, value_color, attrs=['bold']), end="\t\t")
 
 # 5 x 2
 print()
+
+
+# TODOS
+print()
+print(colored('TODO:', attrs=['bold']))
+for td in todos:
+    print(colored(f'- {td}', todos_color, attrs=['bold']))
