@@ -1,13 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import getpass
 import os
+import sys
 import socket
 import shutil
 import psutil
 
 from datetime import datetime
 from termcolor import colored
+
+sys.path.append('/usr/local/bin/todos')
 
 import todo
 
