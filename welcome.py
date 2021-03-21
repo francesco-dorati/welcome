@@ -17,6 +17,7 @@ import todo
 """
     TODO
     -   add percentage colors
+    -   fix uptime (if hours in line: minutes = 0)
 """
 
 # welcome
