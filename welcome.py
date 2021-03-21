@@ -17,8 +17,6 @@ import todo
 """
     TODO
     -   add percentage colors
-    -   TODO list
-    
 """
 
 # welcome
@@ -132,6 +130,10 @@ print()
 
 # TODOS
 print()
-print(colored('TODO:', attrs=['bold']))
-for td in todos:
-    print(colored(f'- {td}', todos_color, attrs=['bold']))
+if len(todos) > 0:
+    print(colored('TODO:', attrs=['bold']))
+    for index, text in enumerate(todos):
+        print(colored(f'   [{index + 1}] {text}', todos_color, attrs=['bold']))
+else:
+   print(colored('TODO list is empty.', 'grey', attrs=['bold'])) 
+    
