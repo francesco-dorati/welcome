@@ -17,7 +17,6 @@ import todo
 """
     TODO
     -   add percentage colors
-    -   fix uptime (if hours in line: minutes = 0)
 """
 
 # welcome
@@ -48,7 +47,11 @@ if 'min' in uptime:
     hours = 0
     minutes = int(uptime[4])
 else:
-    hours, minutes = map(int, uptime.split()[4].split(':'))
+    if 'hrs' in uptime:
+        hours = uptime.split()[4]
+        minutes = 0
+    else:
+        hours, minutes = map(int, uptime.split()[4].split(':'))
 users_connected = uptime[3]
 
 # shell
