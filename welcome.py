@@ -43,7 +43,7 @@ usage_swap = psutil.swap_memory()[3]
 
 # uptime
 uptime = os.popen("uptime").read().replace(',', '')
-days = int(uptime.split()[2])
+days = int(uptime.split()[2]) if 'days' in uptime else 0
 if 'min' in uptime:
     hours = 0
     minutes = int(uptime[4])
@@ -52,7 +52,7 @@ else:
         hours = uptime.split()[4]
         minutes = 0
     else:
-        hours, minutes = map(int, uptime.split()[4].split(':'))
+        hours, minutes = map(int, uptime.split()[4 if 'days' in uptime else 2].split(':'))
 users_connected = uptime[3]
 
 # shell
