@@ -16,6 +16,7 @@ import todo
 
 """
     TODO
+    - add bettery lift (psutil.sensors_battery())
     -   add percentage colors
 """
 
