@@ -16,7 +16,7 @@ import todo
 
 """
     TODO
-    - add bettery (psutil.sensors_battery())
+    - replace print(colored(..))
     - fix "1 day" bug
     -   add percentage colors
 """
@@ -28,6 +28,9 @@ os_version = os.popen("sw_vers -productVersion").read().strip()
 
 # date
 date = datetime.now().strftime('%A %d %B %Y - %H:%M:%S %Z')
+
+# battery
+battery = psutil.sensors_battery()[0]
 
 # disk usage
 total_disk, _, free_disk = shutil.disk_usage("/")
@@ -43,34 +46,33 @@ usage_memory = psutil.virtual_memory()[2]
 usage_swap = psutil.swap_memory()[3]
 
 # uptime
-uptime = os.popen("uptime").read().replace(',', '')
-days = int(uptime.split()[2]) if 'days' in uptime else 0
-if 'min' in uptime:
+uptime = os.popen("uptime").read().replace(',', '').split()
+days = int(uptime[2]) if 'days' in uptime else 0
+if 'mins' in uptime:
     hours = 0
-    minutes = int(uptime[4])
+    minutes = int(uptime[2])
 else:
     if 'hrs' in uptime:
-        hours = uptime.split()[4]
+        hours = uptime[4]
         minutes = 0
     else:
-        hours, minutes = map(int, uptime.split()[4 if 'days' in uptime else 2].split(':'))
+        hours, minutes = map(int, uptime[4 if 'days' in uptime else 2].split(':'))
 users_connected = uptime[3]
 
 # shell
 shell = os.environ['SHELL']
 
 # hostname
-hostname = socket.gethostname()
+hostname = socket.gethostname().split('.')[0]
 
 # ip
 ip = socket.gethostbyname(socket.gethostname())
 
 # todos
-todos = todo.get()
+todolist = todo.get('main')
 
 
 # OUTPUT
-
 username_color = "yellow"
 os_color = "green"
 date_color = "cyan"
@@ -82,7 +84,7 @@ todos_color = 'grey'
 os.system('clear')
 
 # welcome
-print(colored("Welcome", attrs=["bold"]), colored(username, username_color, attrs=["bold"]), colored("to", attrs=["bold"]), colored(f"{os_name} {os_version}", os_color, attrs=["bold"]), "\n")
+print(colored("Welcome", attrs=["bold"]), colored(username, username_color, attrs=["bold"]), colored("to", attrs=["bold"]), colored(f"{os_name} {os_version}", os_color, attrs=["bold"]), colored("at", attrs=["bold"]), colored(f"{battery}% of battery", "red", attrs=["bold"]), "\n")
 
 # date
 print(colored("System information as of", attrs=["bold"]), colored(date, date_color, attrs=["bold"]), "\n")
@@ -95,7 +97,11 @@ print(colored(f'{free_disk // (2**30)} GB of {total_disk // (2**30)} GB', value_
 # 1 x 2
 # uptime
 print(colored('Uptime:\t\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(f'{days} days ' + f'{hours} hours ' + f'{minutes} minutes', value_color, attrs=['bold']), end='\n')
+print(colored(
+    (f'{days} days ' if days != 0 else "") +
+    (f'{hours} hours  ' if hours != 0 else "") + 
+    (f'{minutes} mins' if minutes != 0 else ""), 
+    value_color, attrs=['bold']), end='\n')
 
 # 2 x 1
 # cpu
@@ -138,11 +144,4 @@ print()
 
 
 # TODOS
-print()
-if len(todos) > 0:
-    print(colored('TODO:', attrs=['bold']))
-    for index, text in enumerate(todos):
-        print(colored(f'   [{index + 1}] {text}', todos_color, attrs=['bold']))
-else:
-   print(colored('TODO list is empty.', 'grey', attrs=['bold'])) 
-    
+todo.print_list('get', todolist)
