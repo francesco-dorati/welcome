@@ -10,13 +10,14 @@ import psutil
 from datetime import datetime
 from termcolor import colored
 
-sys.path.append('/usr/local/bin/todos')
+sys.path.append('/usr/local/bin/todo-app')
 
 import todo
 
 """
     TODO
-    - add bettery lift (psutil.sensors_battery())
+    - add bettery (psutil.sensors_battery())
+    - fix "1 day" bug
     -   add percentage colors
 """
 
