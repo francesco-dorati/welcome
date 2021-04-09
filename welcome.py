@@ -34,7 +34,7 @@ battery = psutil.sensors_battery()[0]
 
 # disk usage
 total_disk, _, free_disk = shutil.disk_usage("/")
-usage_disk = round((((total_disk - free_disk) / total_disk) * 100), 1)
+used_disk = total_disk - free_disk
 
 # cpu usage
 usage_cpu = psutil.cpu_percent()
@@ -92,7 +92,7 @@ print(colored("System information as of", attrs=["bold"]), colored(date, date_co
 # 1 x 1
 # disk
 print(colored('Usage of /:\t\t', attribute_color, attrs=['bold']), end='') 
-print(colored(f'{free_disk // (2**30)} GB of {total_disk // (2**30)} GB', value_color, attrs=['bold']), end='\t\t')
+print(colored(f'{used_disk // (2**30)} GB of {total_disk // (2**30)} GB', value_color, attrs=['bold']), end='\t\t')
 
 # 1 x 2
 # uptime
