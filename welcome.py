@@ -8,7 +8,7 @@ import shutil
 import psutil
 
 from datetime import datetime
-from termcolor import colored
+from termcolor import colored, cprint
 
 sys.path.append('/usr/local/bin/todo-app')
 
@@ -73,8 +73,10 @@ todolist = todo.get('main')
 
 
 # OUTPUT
+bold = lambda text, color=None: cprint(text, color, attrs=["bold"], end="")
 username_color = "yellow"
 os_color = "green"
+battery_color = "green" if battery > 50 else ("yellow" if battery > 20 else "red")
 date_color = "cyan"
 attribute_color = "grey"
 value_color = None 
@@ -84,63 +86,56 @@ todos_color = 'grey'
 os.system('clear')
 
 # welcome
-print(colored("Welcome", attrs=["bold"]), colored(username, username_color, attrs=["bold"]), colored("to", attrs=["bold"]), colored(f"{os_name} {os_version}", os_color, attrs=["bold"]), colored("at", attrs=["bold"]), colored(f"{battery}% of battery", "red", attrs=["bold"]), "\n")
+bold("Welcome ")
+bold(username, username_color)
+bold(" to ")
+bold(os_name + " " + os_version, os_color)
+bold(" at ")
+bold(str(battery) + "% of battery\n", battery_color)
 
 # date
-print(colored("System information as of", attrs=["bold"]), colored(date, date_color, attrs=["bold"]), "\n")
+bold("System information as of ")
+bold(date + "\n\n", date_color)
 
-# 1 x 1
 # disk
-print(colored('Usage of /:\t\t', attribute_color, attrs=['bold']), end='') 
-print(colored(f'{used_disk // (2**30)} GB of {total_disk // (2**30)} GB', value_color, attrs=['bold']), end='\t\t')
+bold('Usage of /:\t\t', attribute_color) 
+bold(f'{used_disk // (2**30)} GB of {total_disk // (2**30)} GB\n', value_color)
 
-# 1 x 2
-# uptime
-print(colored('Uptime:\t\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(
-    (f'{days} days ' if days != 0 else "") +
-    (f'{hours} hours  ' if hours != 0 else "") + 
-    (f'{minutes} mins' if minutes != 0 else ""), 
-    value_color, attrs=['bold']), end='\n')
-
-# 2 x 1
 # cpu
-print(colored('CPU usage:\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(f'{usage_cpu}%', value_color, attrs=['bold']), end='\t\t\t')
+bold('CPU usage:\t\t', attribute_color)
+bold(str(usage_cpu) + "%\n", value_color)
 
-# 2 x 2
-# hostname
-print(colored('Hostname:\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(hostname, value_color, attrs=['bold']), end='\n')
-
-# 3 x 1
 # memory
-print(colored('Memory usage:\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(f'{usage_memory}%', value_color, attrs=['bold']), end='\t\t\t')
+bold('Memory usage:\t\t', attribute_color)
+bold(str(usage_memory) + "%\n", value_color)
 
-# 3 x 2
-# ip
-print(colored('IPv4 address for en0:\t', attribute_color, attrs=['bold']), end='')
-print(colored(ip, value_color, attrs=['bold']), end='\n')
-
-# 4 X 1
 # swap
-print(colored('Swap usage:\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(f'{usage_swap}%', value_color, attrs=['bold']), end='\t\t\t')
+bold('Swap usage:\t\t', attribute_color)
+bold(str(usage_swap) + "%\n", value_color)
 
+# ip
+bold('IPv4 address for en0:\t', attribute_color)
+bold(ip + "\n", value_color)
 
-# 4 x 2
-# users logged
-print(colored('Users logged in:\t', attribute_color, attrs=['bold']), end='')
-print(colored(users_connected, value_color, attrs=['bold']), end='\n')
+# uptime
+bold('Uptime:\t\t\t', attribute_color)
+bold(
+    (f'{days} days ' if days != 0 else "") +
+    (f'{hours} hours ' if hours != 0 else "") + 
+    (f'{minutes} mins' if minutes != 0 else "") + "\n", 
+    value_color)
 
-# 5 x 1
 # shell
-print(colored('Shell:\t\t\t', attribute_color, attrs=['bold']), end='')
-print(colored(shell, value_color, attrs=['bold']), end="\t\t")
+bold('Shell:\t\t\t', attribute_color)
+bold(shell + "\n", value_color)
 
-# 5 x 2
-print()
+# hostname
+# bold('Hostname:\t\t', attribute_color)
+# bold(hostname + "\n", value_color)
+
+# users logged
+# bold('Users logged in:\t', attribute_color)
+# bold(users_connected + "\n", value_color)
 
 
 # TODOS
