@@ -16,9 +16,8 @@ import todo
 
 """
     TODO
-    - replace print(colored(..))
     - fix "1 day" bug
-    -   add percentage colors
+    - fix memory usage
 """
 
 # welcome
