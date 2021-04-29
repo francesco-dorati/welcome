@@ -18,6 +18,7 @@ import todo
     TODO
     - fix "1 day" bug
     - fix memory usage
+    - battery percetage only color
 """
 
 # welcome
